@@ -2,6 +2,7 @@ package com.cydeo.entity;
 
 import jakarta.persistence.Entity;
 
+import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -18,5 +19,6 @@ public class Customer extends BaseEntity{
     private String lastName;
     private String userName;
     private String email;
+
 
 }
