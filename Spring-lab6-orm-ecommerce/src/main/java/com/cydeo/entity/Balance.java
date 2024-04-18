@@ -1,6 +1,7 @@
 package com.cydeo.entity;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.OneToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,7 +17,8 @@ public class Balance extends BaseEntity {
 
 
     private BigDecimal amount;
+
     @OneToOne
-    private Customer customerId;
+    private Customer customer;
 
 }

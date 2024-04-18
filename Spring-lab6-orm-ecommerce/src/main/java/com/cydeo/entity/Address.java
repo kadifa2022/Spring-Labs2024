@@ -16,7 +16,7 @@ public class Address extends BaseEntity{
     private String street;
     private String zipCode;
     @ManyToOne
-    private Customer customerId;
+    private Customer customer;
 
 
 }
