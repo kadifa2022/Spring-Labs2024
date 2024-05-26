@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Spring-Labs2024.iml" filepath="$PROJECT_DIR$/Spring-Labs2024.iml" />
-      <module fileurl="file://$PROJECT_DIR$/Spring-lab6-orm-ecommerce/Spring-lab6-orm-ecommerce.iml" filepath="$PROJECT_DIR$/Spring-lab6-orm-ecommerce/Spring-lab6-orm-ecommerce.iml" />
+      <module fileurl="file://$PROJECT_DIR$/spring-18-REST-SchoolLab/spring-18-REST-SchoolLab.iml" filepath="$PROJECT_DIR$/spring-18-REST-SchoolLab/spring-18-REST-SchoolLab.iml" />
     </modules>
   </component>
 </project>

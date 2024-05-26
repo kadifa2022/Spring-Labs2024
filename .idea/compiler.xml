@@ -11,8 +11,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="spring-18-REST-SchoolLab" target="1.5" />
       <module name="spring-lab6-orm-ecomerce" target="17" />
-      <module name="Spring-lab6-orm-ecommerce" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
