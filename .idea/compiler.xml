@@ -8,16 +8,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="Spring-lab6-orm-ecommerce" />
+        <module name="spring-18-REST-SchoolLab" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="spring-18-REST-SchoolLab" target="1.5" />
       <module name="spring-lab6-orm-ecomerce" target="17" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="Spring-lab6-orm-ecommerce" options="-parameters" />
+      <module name="spring-18-REST-SchoolLab" options="-parameters" />
       <module name="spring-lab6-orm-ecomerce" options="-parameters" />
     </option>
   </component>
