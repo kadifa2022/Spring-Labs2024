@@ -1,10 +1,7 @@
 package com.cydeo.entity;
 
 import com.cydeo.enums.AddressType;
-import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,7 +21,10 @@ public class Address extends BaseEntity{
     private String postalCode;
     @Enumerated(EnumType.STRING)
     private AddressType addressType;
+    @OneToOne(mappedBy = "address")
     private Student student;
+    @OneToOne(mappedBy = "address")
     private Parent parent;
+    @OneToOne(mappedBy = "address")
     private Teacher teacher;
 }
