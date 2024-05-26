@@ -1,8 +1,7 @@
-package com.cydeo.dto;
+package com.cydeo.entity;
 
-import com.cydeo.enums.EducationLevel;
 import com.cydeo.enums.Status;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,23 +9,31 @@ import lombok.Setter;
 
 import java.time.LocalDate;
 
-@Getter
-@Setter
+@Entity
+@Table(name = "parent")
 @NoArgsConstructor
 @AllArgsConstructor
-public class TeacherDTO {
+@Getter
+@Setter
+public class Parent extends BaseEntity{
 
-    private Long id;
     private String firstName;
     private String lastName;
+    private String profession;
     private String phoneNumber;
-
     private String email;
     private String username;
     private String password;
+
+    @Column(columnDefinition = "DATE")
     private LocalDate birthday;
+
+    @Enumerated(EnumType.STRING)
     private Status status;
-    private EducationLevel educationLevel;
-    @JsonManagedReference
-    private AddressDTO addressDTO;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+
 }

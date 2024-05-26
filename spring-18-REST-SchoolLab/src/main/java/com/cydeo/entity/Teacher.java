@@ -36,6 +36,8 @@ public class Teacher extends BaseEntity{
     @Enumerated(EnumType.STRING)
     private EducationLevel educationLevel;
 
+   @OneToOne(cascade = CascadeType.ALL)
+   @JoinColumn(name = "address_id")
     private Address address;
 
 }

@@ -1,7 +1,7 @@
 package com.cydeo.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Table;
+import com.cydeo.enums.Status;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -21,7 +21,19 @@ public class Student extends BaseEntity{
     private String lastName;
     private String phoneNumber;
     private String email;
-    private String userName;
+    private String username;
     private String password;
+    @Column(columnDefinition = "DATE")
     private LocalDate birthday;
+
+    @Enumerated(EnumType.STRING)
+    private Status status;
+
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "address_id")
+    private Address address;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "parent_id")
+    private Parent parent;
 }

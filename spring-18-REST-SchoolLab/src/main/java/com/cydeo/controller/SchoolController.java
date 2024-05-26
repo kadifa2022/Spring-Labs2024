@@ -17,12 +17,12 @@ public class SchoolController {
     }
 
 
-}
+
 
     @GetMapping("/teachers")
     public List<TeacherDTO> readAllTeacher(){
-    List<TeacherDTO> teachers = teacherService.findAll();
-    return teachers;
+    List<TeacherDTO> teacherDTOS = teacherService.findAll();
+    return teacherDTOS;
 
     }
 
