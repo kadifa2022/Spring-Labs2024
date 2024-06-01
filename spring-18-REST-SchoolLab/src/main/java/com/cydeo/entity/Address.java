@@ -27,4 +27,6 @@ public class Address extends BaseEntity{
     private Parent parent;
     @OneToOne(mappedBy = "address")
     private Teacher teacher;
+
+
 }
