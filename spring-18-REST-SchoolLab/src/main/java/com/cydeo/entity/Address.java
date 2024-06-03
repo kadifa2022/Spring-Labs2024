@@ -1,11 +1,13 @@
 package com.cydeo.entity;
 
 import com.cydeo.enums.AddressType;
-import jakarta.persistence.*;
+
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+
+import javax.persistence.*;
 
 @Entity
 @Getter
@@ -14,6 +16,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Table(name = "address")
 public class Address extends BaseEntity{
+
     private String street;
     private String country;
     private String state;
