@@ -50,6 +50,7 @@ public class AddressServiceImpl implements AddressService {
         //we will get current temperature and set based on city, and return DTO
        // addressDTO.setCurrentTemperature(retrieveCurrentWeather(addressDTO.getCity()).getCurrent().getTemperature());
         addressDTO.setCurrentTemperature(retrieveTemperatureByCity(addressDTO.getCity()));
+
         return addressDTO;
     }
 

@@ -9,13 +9,14 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.bouncycastle.asn1.eac.Flags;
 
 @NoArgsConstructor
 @Getter
 @Setter
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-@JsonInclude(JsonInclude.Include.NON_NULL)
+//@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AddressDTO {
 
     @JsonIgnore
@@ -38,4 +39,6 @@ public class AddressDTO {
     private TeacherDTO teacher;
 
     private Integer currentTemperature;
+
+    private String flag;
 }
