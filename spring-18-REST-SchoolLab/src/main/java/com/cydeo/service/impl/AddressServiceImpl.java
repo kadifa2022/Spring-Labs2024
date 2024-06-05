@@ -1,5 +1,6 @@
 package com.cydeo.service.impl;
 
+import com.cydeo.client.CountryApiClient;
 import com.cydeo.client.WeatherApiClient;
 import com.cydeo.dto.AddressDTO;
 import com.cydeo.dto.weather.WeatherDTO;
@@ -22,15 +23,17 @@ public class AddressServiceImpl implements AddressService {
     private final AddressRepository addressRepository;
     private final MapperUtil mapperUtil;
     private final WeatherApiClient weatherApiClient;
+    private final CountryApiClient countryApiClient;
 
     @Value("${access_key}")
     private String access_key;
 
-    public AddressServiceImpl(AddressRepository addressRepository, MapperUtil mapperUtil, WeatherApiClient weatherApiClient) {
+    public AddressServiceImpl(AddressRepository addressRepository, MapperUtil mapperUtil, WeatherApiClient weatherApiClient, CountryApiClient countryApiClient) {
 
         this.addressRepository = addressRepository;
         this.mapperUtil = mapperUtil;
         this.weatherApiClient = weatherApiClient;
+        this.countryApiClient = countryApiClient;
     }
 
 
@@ -50,8 +53,13 @@ public class AddressServiceImpl implements AddressService {
         //we will get current temperature and set based on city, and return DTO
        // addressDTO.setCurrentTemperature(retrieveCurrentWeather(addressDTO.getCity()).getCurrent().getTemperature());
         addressDTO.setCurrentTemperature(retrieveTemperatureByCity(addressDTO.getCity()));
+        addressDTO.setFlag(retrieveFlagByCountry(addressDTO.getCountry()));
 
         return addressDTO;
+    }
+
+    private String retrieveFlagByCountry(String country) {// if we're returning list than structures needs to change with(get(0))
+        return countryApiClient.getCountryInfo(country).get(0).getFlags().getPng();
     }
 
     private Integer retrieveTemperatureByCity(String city) {
