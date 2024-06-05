@@ -16,7 +16,7 @@ import org.bouncycastle.asn1.eac.Flags;
 @Setter
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
-//@JsonInclude(JsonInclude.Include.NON_NULL)
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class AddressDTO {
 
     @JsonIgnore
