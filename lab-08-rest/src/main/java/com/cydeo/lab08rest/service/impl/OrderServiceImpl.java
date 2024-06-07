@@ -1,6 +1,7 @@
 package com.cydeo.lab08rest.service.impl;
 
 import com.cydeo.lab08rest.dto.OrderDTO;
+import com.cydeo.lab08rest.dto.UpdateOrderDTO;
 import com.cydeo.lab08rest.entity.Order;
 import com.cydeo.lab08rest.mapper.MapperUtil;
 import com.cydeo.lab08rest.repository.OrderRepository;
@@ -42,7 +43,7 @@ public class OrderServiceImpl implements OrderService {
     @Override
     public OrderDTO updateOrder(OrderDTO orderDTO) {
         //1st step look for the orderId inside the DB and throw exception
-        Order Order = orderRepository.findById(orderDTO.getId())
+        Order order = orderRepository.findById(orderDTO.getId())
                 .orElseThrow(()->new RuntimeException("Order could not be found"));
         //we have to check of the Order fields exists or not (creating private method if something exists in dB)
         validateRelatedFieldsAreExist(orderDTO);
@@ -51,6 +52,31 @@ public class OrderServiceImpl implements OrderService {
         Order updatedOrder = orderRepository.save(willBeUpdatedOrder);
         // converted again the updated one and returned
         return mapperUtil.convert(updatedOrder, new OrderDTO());
+    }
+
+    @Override// New update method with the fields that is updatable
+    public OrderDTO updateOrderById(Long id, UpdateOrderDTO updateOrderDTO) {
+        Order order = orderRepository.findById(id).orElseThrow(()-> new RuntimeException("Order could not be found"));
+        // if we have another business logic for update method we are implementing here f
+        // for exp: if we are getting the same value, it is not necessary to update the actual value
+        // i will create one boolean variable and by default is false
+        boolean changeDetected = false;
+        if(!order.getPaidPrice().equals(updateOrderDTO.getPaidPrice())){
+            order.setPaidPrice(updateOrderDTO.getPaidPrice());
+            changeDetected=true;
+        }
+        if(!order.getTotalPrice().equals(updateOrderDTO.getTotalPrice())){
+            order.setTotalPrice(updateOrderDTO.getTotalPrice());
+            changeDetected=true;
+        }
+        //if there is any change update the order and return it
+        if(changeDetected){
+           Order updateOrder =  orderRepository.save(order);
+            return mapperUtil.convert(updateOrder, new OrderDTO());
+        }else{ // if is not any change
+            throw new RuntimeException(" No changes detected");
+        }
+
     }
 
     // my private method (not for business logic of orderService)to validate existing fields on my orderDTO

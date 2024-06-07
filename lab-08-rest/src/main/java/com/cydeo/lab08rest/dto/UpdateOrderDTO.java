@@ -12,9 +12,9 @@ import lombok.Setter;
 
 @Getter
 @Setter
-public class UpdateOrderDTO {
+public class UpdateOrderDTO { // it can be named of the class  UpdateOrderRequest
 
-    // this is potential problems and we are adding one additional layer
+    // this is potential problems in impl. we are adding one additional layer
 
     //only updatable fields should be existed in DTO
     @NotNull(message = "price can not be null")
