@@ -3,6 +3,7 @@ package com.cydeo.lab08rest.service.impl;
 import com.cydeo.lab08rest.dto.OrderDTO;
 import com.cydeo.lab08rest.dto.UpdateOrderDTO;
 import com.cydeo.lab08rest.entity.Order;
+
 import com.cydeo.lab08rest.exception.NotFoundException;
 import com.cydeo.lab08rest.mapper.MapperUtil;
 import com.cydeo.lab08rest.repository.OrderRepository;
@@ -75,9 +76,16 @@ public class OrderServiceImpl implements OrderService {
            Order updateOrder =  orderRepository.save(order);
             return mapperUtil.convert(updateOrder, new OrderDTO());
         }else{ // if is not any change
-            throw new NotFoundException(" No changes detected");
+            throw new RuntimeException(" No changes detected");
         }
 
+    }
+
+    @Override
+    public OrderDTO retrieveOrderDetailById(Long id) {
+        // find the order based on id, convert and return it
+       Order order = orderRepository.findById(id).orElseThrow(()-> new NotFoundException("Order could not be found"));
+       return mapperUtil.convert(order,new OrderDTO());
     }
 
     // my private method (not for business logic of orderService)to validate existing fields on my orderDTO
