@@ -32,15 +32,20 @@ public class GlobalExceptionHandler {
 
     protected ResponseEntity<ExceptionWrapper> handleMethodArgumentNotValid(MethodArgumentNotValidException ex) {
         ExceptionWrapper exceptionWrapper = new ExceptionWrapper("Invalid Input(s)", HttpStatus.BAD_REQUEST);
-        List<ValidationError> validationErrorList = new ArrayList<>();
+        List<ValidationError> validationErrors = new ArrayList<>();
 
         for(ObjectError error: ex.getBindingResult().getAllErrors()){
+
             String fieldName= ((FieldError)error).getField();
             Object rejectValue=((FieldError)error).getRejectedValue();
             String errorMessage=error.getDefaultMessage();
 
+            ValidationError validationError = new ValidationError(fieldName,rejectValue,errorMessage);
+            validationErrors.add(validationError);
         }
-        return null;
+        exceptionWrapper.setValidationErrorList(validationErrors);
+        exceptionWrapper.setErrorCount(validationErrors.size());
+        return new ResponseEntity<>(exceptionWrapper,exceptionWrapper.getHttpStatus());
     }
 
 
