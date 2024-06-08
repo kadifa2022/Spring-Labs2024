@@ -1,0 +1,24 @@
+package com.cydeo.lab08rest.exception;
+
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.http.HttpStatus;
+
+import java.util.List;
+
+
+@Getter
+@Setter
+public class ExceptionWrapper { //2. adding fields for validationError in constructor
+    //NotFoundException fields
+    public String message;
+    public HttpStatus httpStatus;
+    //2. validation error
+    private Integer errorCount;
+    private List<ValidationError> validationErrorList;
+
+    public ExceptionWrapper(String message, HttpStatus httpStatus) {
+        this.message = message;
+        this.httpStatus = httpStatus;
+    }
+}
