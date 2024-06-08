@@ -48,5 +48,12 @@ public class GlobalExceptionHandler {
         return new ResponseEntity<>(exceptionWrapper,exceptionWrapper.getHttpStatus());
     }
 
+    // for all others exceptions
+    @ExceptionHandler({Exception.class,RuntimeException.class,Throwable.class})
+    public ResponseEntity<ExceptionWrapper> genericExceptionHandler(){
+        return new ResponseEntity<>(new ExceptionWrapper("Action failed: An error occurred!", HttpStatus.INTERNAL_SERVER_ERROR),HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+
 
 }

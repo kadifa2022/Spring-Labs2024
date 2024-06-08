@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 import org.springframework.http.HttpStatus;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 
@@ -15,6 +16,7 @@ public class ExceptionWrapper { //2. adding fields for validationError in constr
     //NotFoundException fields
     public String message;
     public HttpStatus httpStatus;
+
     //2. validation error
     private Integer errorCount;
     private List<ValidationError> validationErrorList;
