@@ -3,6 +3,7 @@ package com.cydeo.lab08rest.service.impl;
 import com.cydeo.lab08rest.dto.OrderDTO;
 import com.cydeo.lab08rest.dto.UpdateOrderDTO;
 import com.cydeo.lab08rest.entity.Order;
+import com.cydeo.lab08rest.exception.NotFoundException;
 import com.cydeo.lab08rest.mapper.MapperUtil;
 import com.cydeo.lab08rest.repository.OrderRepository;
 import com.cydeo.lab08rest.service.CartService;
@@ -44,7 +45,7 @@ public class OrderServiceImpl implements OrderService {
     public OrderDTO updateOrder(OrderDTO orderDTO) {
         //1st step look for the orderId inside the DB and throw exception
         Order order = orderRepository.findById(orderDTO.getId())
-                .orElseThrow(()->new RuntimeException("Order could not be found"));
+                .orElseThrow(()->new NotFoundException("Order could not be found"));
         //we have to check of the Order fields exists or not (creating private method if something exists in dB)
         validateRelatedFieldsAreExist(orderDTO);
         // if fields exists, then convert orderDTO to order and save it
@@ -56,7 +57,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override// New update method with the fields that is updatable
     public OrderDTO updateOrderById(Long id, UpdateOrderDTO updateOrderDTO) {
-        Order order = orderRepository.findById(id).orElseThrow(()-> new RuntimeException("Order could not be found"));
+        Order order = orderRepository.findById(id).orElseThrow(()-> new NotFoundException("Order could not be found"));
         // if we have another business logic for update method we are implementing here f
         // for exp: if we are getting the same value, it is not necessary to update the actual value
         // i will create one boolean variable and by default is false
@@ -74,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
            Order updateOrder =  orderRepository.save(order);
             return mapperUtil.convert(updateOrder, new OrderDTO());
         }else{ // if is not any change
-            throw new RuntimeException(" No changes detected");
+            throw new NotFoundException(" No changes detected");
         }
 
     }
@@ -84,13 +85,13 @@ public class OrderServiceImpl implements OrderService {
         //in this method we have 3 different service and make sure that they have fields
         //we will create service and existById method and verify
         if(!customerService.existById(orderDTO.getCustomerId())) { // reversing business logic
-            throw new RuntimeException("Customer not be found");
+            throw new NotFoundException("Customer could not be found");
         }
         if(!cartService.existById(orderDTO.getCartId())){
-            throw new RuntimeException("Order not be found");
+            throw new NotFoundException("Order could not be found");
         }
         if(!paymentService.existById(orderDTO.getPaymentId())){
-            throw new RuntimeException("Payment not be found");
+            throw new NotFoundException("Payment could not be found");
         }
 
     }
