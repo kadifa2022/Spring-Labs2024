@@ -5,6 +5,7 @@ import com.cydeo.lab08rest.dto.UpdateOrderDTO;
 
 
 import java.util.List;
+import java.util.Optional;
 
 public interface OrderService {
 
@@ -15,5 +16,5 @@ public interface OrderService {
    OrderDTO updateOrderById(Long id, UpdateOrderDTO updateOrderDTO);
 
 
-   OrderDTO retrieveOrderDetailById(Long id);
+   OrderDTO retrieveOrderDetailById(Long id, Optional<String> currency);
 }
