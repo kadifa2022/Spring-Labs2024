@@ -1,5 +1,6 @@
 package com.cydeo.lab08rest.service.impl;
 
+import com.cydeo.lab08rest.client.CurrencyApiClient;
 import com.cydeo.lab08rest.dto.OrderDTO;
 import com.cydeo.lab08rest.dto.UpdateOrderDTO;
 import com.cydeo.lab08rest.entity.Order;
@@ -14,6 +15,7 @@ import com.cydeo.lab08rest.service.PaymentService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -24,14 +26,17 @@ public class OrderServiceImpl implements OrderService {
     private final CustomerService customerService;
     private final CartService cartService;
     private final PaymentService paymentService;
+    private final CurrencyApiClient currencyApiClient;
 
 
-    public OrderServiceImpl(OrderRepository orderRepository, MapperUtil mapperUtil, CustomerService customerService, CartService cartService, PaymentService paymentService) {
+    public OrderServiceImpl(OrderRepository orderRepository, MapperUtil mapperUtil, CustomerService customerService,
+                            CartService cartService, PaymentService paymentService, CurrencyApiClient currencyApiClient) {
         this.orderRepository = orderRepository;
         this.mapperUtil = mapperUtil;
         this.customerService = customerService;
         this.cartService = cartService;
         this.paymentService = paymentService;
+        this.currencyApiClient = currencyApiClient;
     }
 
 
@@ -82,9 +87,20 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public OrderDTO retrieveOrderDetailById(Long id) {
+    public OrderDTO retrieveOrderDetailById(Long id, Optional<String> currency) { // we implement this structure
         // find the order based on id, convert and return it
-       Order order = orderRepository.findById(id).orElseThrow(()-> new NotFoundException("Order could not be found"));
+       Order order = orderRepository.findById(id).orElseThrow(
+               ()-> new NotFoundException("Order could not be found"));
+       // if I have currency value from the user it will use this structure and this line will execute
+        // if not find the order and return it
+       currency.ifPresent(curr -> { //before is saving in DB we are doing new prices
+           //get the  currency data based on currency type
+           //do calculations and set new paidPrice and totalPrice
+           // CONSUME API
+
+
+
+       });
        return mapperUtil.convert(order,new OrderDTO());
     }
 
