@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/v1/order")
@@ -38,10 +39,10 @@ public class OrderController {
         return ResponseEntity.ok(new ResponseWrapper("Order is successfully updated",
                 orderService.updateOrderById(id, updateOrderDTO),HttpStatus.OK));
     }
-    @GetMapping("/{id}")
-    public ResponseEntity<ResponseWrapper> getOrderById(@PathVariable("id") Long id){ // will accept id as parameter
+    @GetMapping("/{id}")                        // will accept id as parameter     //we are accepting Currency as optional String without worrying to have nullPointerException
+    public ResponseEntity<ResponseWrapper> getOrderById(@PathVariable("id") Long id, @RequestParam(required = false)Optional<String> currency){
         return ResponseEntity.ok(new ResponseWrapper("Order is successfully retrieved",
-                orderService.retrieveOrderDetailById(id),HttpStatus.OK));
+                orderService.retrieveOrderDetailById(id,currency),HttpStatus.OK));
     }
 
 
