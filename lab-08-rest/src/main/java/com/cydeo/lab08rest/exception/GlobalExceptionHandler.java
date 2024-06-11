@@ -8,6 +8,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,6 +54,16 @@ public class GlobalExceptionHandler {
     public ResponseEntity<ExceptionWrapper> genericExceptionHandler(){
         return new ResponseEntity<>(new ExceptionWrapper("Action failed: An error occurred!", HttpStatus.INTERNAL_SERVER_ERROR),HttpStatus.INTERNAL_SERVER_ERROR);
     }
+
+    @ExceptionHandler(CurrencyTypeNotFoundException.class)
+    public ResponseEntity<ExceptionWrapper> handleCurrencyTypeNotFoundException(CurrencyTypeNotFoundException ex){
+        // create JSON body and return it
+        ExceptionWrapper exceptionWrapper = new ExceptionWrapper(ex.getMessage(),HttpStatus.NOT_FOUND);
+        exceptionWrapper.setTimestamp(LocalDateTime.now());
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(exceptionWrapper);
+
+    }
+
 
 
 
