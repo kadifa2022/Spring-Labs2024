@@ -5,6 +5,8 @@ import com.cydeo.lab08rest.dto.OrderDTO;
 import com.cydeo.lab08rest.dto.UpdateOrderDTO;
 import com.cydeo.lab08rest.entity.Order;
 
+import com.cydeo.lab08rest.enums.Currency;
+import com.cydeo.lab08rest.exception.CurrencyTypeNotFoundException;
 import com.cydeo.lab08rest.exception.NotFoundException;
 import com.cydeo.lab08rest.mapper.MapperUtil;
 import com.cydeo.lab08rest.repository.OrderRepository;
@@ -16,10 +18,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 @Service
@@ -97,15 +101,17 @@ public class OrderServiceImpl implements OrderService {
        Order order = orderRepository.findById(id).orElseThrow(
                ()-> new NotFoundException("Order could not be found"));
        // if I have currency value from the user it will use this structure and this line will execute
-        // if not find the order and return it
+        // if not find the order will not execute
        currency.ifPresent(curr -> { //before is saving in DB we are doing new prices
+           validateCurrency(curr);
            //get the  currency data based on currency type
            //create a private method to separate steps(which is accepting the currency and returning thr currency result)
            //for example i am giving the euro and they returning the Euro Value
+
            BigDecimal currencyRate =getCurrencyRate(curr);  // CONSUME API
            //do calculations and set new paidPrice and totalPrice (this new prices)
-           BigDecimal newPaidPrice = order.getPaidPrice().multiply(currencyRate);// setting new value(if they accept euro will return euro, if accept usd return usd)
-           BigDecimal newTotalPrice = order.getTotalPrice().multiply(currencyRate);
+           BigDecimal newPaidPrice = order.getPaidPrice().multiply(currencyRate).setScale(2, RoundingMode.HALF_UP);// setting new value(if they accept euro will return euro, if accept usd return usd)
+           BigDecimal newTotalPrice = order.getTotalPrice().multiply(currencyRate).setScale(2,RoundingMode.HALF_UP);
            // set the value to order that we retrieved
            order.setPaidPrice(newPaidPrice);
            order.setTotalPrice(newTotalPrice);
@@ -114,14 +120,31 @@ public class OrderServiceImpl implements OrderService {
        return mapperUtil.convert(order,new OrderDTO());
     }
 
+    private void validateCurrency(String curr) { // we are validating currency here before providing getCurrencyMethod()
+        // check if the currency is valid currency
+        //  type ENUM
+        List<String> currencies = Stream.of(Currency.values())// converting ENUM TO THE LIST
+                .map(currency -> currency.value)
+                .collect(Collectors.toList());
+        boolean isCurrencyValid = currencies.contains(curr);
+        if (!isCurrencyValid)
+            throw  new CurrencyTypeNotFoundException("Currency type for " + curr + "could not be found");
+    }
+
     private BigDecimal getCurrencyRate(String currency) {// this method is returning Double (sending value and accept the request
    //consume api //request part//           this can be manage in different class
         // it is returning me map -> we save response inside quotes map
         Map<String, Double> quotes= currencyApiClient.getCurrencyRate(accessKey, currency, "USD", 1).getQuotes();
+        Boolean isSuccess =currencyApiClient.getCurrencyRate(accessKey, currency, "USD", 1).getSuccess();
+        if(!isSuccess){// Before we do action we are checking if the feignClient working
+            throw new RuntimeException("API IS DOWN");
+        }
         String expectedCurrency = "USD" + currency.toUpperCase(); // String manipulation and get correct currency
         BigDecimal currencyRate= BigDecimal.valueOf(quotes.get(expectedCurrency)); // converting to big decimal
         return currencyRate;
         }
+
+
 
     // my private method (not for business logic of orderService)to validate existing fields on my orderDTO
     private void validateRelatedFieldsAreExist(OrderDTO orderDTO) {
