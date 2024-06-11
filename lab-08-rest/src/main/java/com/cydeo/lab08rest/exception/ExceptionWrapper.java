@@ -16,6 +16,7 @@ public class ExceptionWrapper { //2. adding fields for validationError in constr
     //NotFoundException fields
     public String message;
     public HttpStatus httpStatus;
+    private LocalDateTime timestamp;
 
     //2. validation error
     private Integer errorCount;
