@@ -134,8 +134,8 @@ public class OrderServiceImpl implements OrderService {
     private BigDecimal getCurrencyRate(String currency) {// this method is returning Double (sending value and accept the request
    //consume api //request part//           this can be manage in different class
         // it is returning me map -> we save response inside quotes map
-        Map<String, Double> quotes= currencyApiClient.getCurrencyRate(accessKey, currency, "USD", 1).getQuotes();
-        Boolean isSuccess =currencyApiClient.getCurrencyRate(accessKey, currency, "USD", 1).getSuccess();
+        Map<String, Double> quotes= (Map<String, Double>) currencyApiClient.getCurrencyRate(accessKey, currency, "USD", 1).get("quotes"); // get("quotes") were cast to object (Map<String, Object>)
+        Boolean isSuccess = (Boolean) currencyApiClient.getCurrencyRate(accessKey, currency, "USD", 1).get("success");//success were cast to (Boolean)
         if(!isSuccess){// Before we do action we are checking if the feignClient working
             throw new RuntimeException("API IS DOWN");
         }
