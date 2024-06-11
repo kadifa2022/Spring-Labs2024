@@ -24,7 +24,7 @@ public class AddressController {
     public ResponseEntity<ResponseWrapper> listAllProjects(){
         List<AddressDTO> productList =  addressService.retrieveAddressList();
 
-        return ResponseEntity.ok(new ResponseWrapper("Adresses are successfully retrieved",
+        return ResponseEntity.ok(new ResponseWrapper("Address are successfully retrieved",
                 addressService.retrieveAddressList(), HttpStatus.ACCEPTED));
     }
 
