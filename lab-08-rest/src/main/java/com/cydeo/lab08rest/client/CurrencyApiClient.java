@@ -25,7 +25,7 @@ public interface CurrencyApiClient {
 //  &format=1
 
 @GetMapping("/live")// once we have currencyApiResponse sending request is ready
-CurrencyApiResponse getCurrencyRate(@RequestParam ("access_key") String accessKey,
+Map<String, Object> getCurrencyRate(@RequestParam ("access_key") String accessKey,
                                     @RequestParam("currencies") String currencies,
                                     @RequestParam("source") String source,
                                     @RequestParam("format") int format);
