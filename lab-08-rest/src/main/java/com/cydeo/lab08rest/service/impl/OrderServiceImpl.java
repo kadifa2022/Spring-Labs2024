@@ -12,15 +12,20 @@ import com.cydeo.lab08rest.service.CartService;
 import com.cydeo.lab08rest.service.CustomerService;
 import com.cydeo.lab08rest.service.OrderService;
 import com.cydeo.lab08rest.service.PaymentService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
 
 @Service
 public class OrderServiceImpl implements OrderService {
+    @Value("${access_key}")
+    private String accessKey;
     private final OrderRepository orderRepository;
     private final MapperUtil mapperUtil;
     private final CustomerService customerService;
@@ -95,14 +100,28 @@ public class OrderServiceImpl implements OrderService {
         // if not find the order and return it
        currency.ifPresent(curr -> { //before is saving in DB we are doing new prices
            //get the  currency data based on currency type
-           //do calculations and set new paidPrice and totalPrice
-           // CONSUME API
-
-
-
+           //create a private method to separate steps(which is accepting the currency and returning thr currency result)
+           //for example i am giving the euro and they returning the Euro Value
+           BigDecimal currencyRate =getCurrencyRate(curr);  // CONSUME API
+           //do calculations and set new paidPrice and totalPrice (this new prices)
+           BigDecimal newPaidPrice = order.getPaidPrice().multiply(currencyRate);// setting new value(if they accept euro will return euro, if accept usd return usd)
+           BigDecimal newTotalPrice = order.getTotalPrice().multiply(currencyRate);
+           // set the value to order that we retrieved
+           order.setPaidPrice(newPaidPrice);
+           order.setTotalPrice(newTotalPrice);
        });
+       //convert and return it
        return mapperUtil.convert(order,new OrderDTO());
     }
+
+    private BigDecimal getCurrencyRate(String currency) {// this method is returning Double (sending value and accept the request
+   //consume api //request part//           this can be manage in different class
+        // it is returning me map -> we save response inside quotes map
+        Map<String, Double> quotes= currencyApiClient.getCurrencyRate(accessKey, currency, "USD", 1).getQuotes();
+        String expectedCurrency = "USD" + currency.toUpperCase(); // String manipulation and get correct currency
+        BigDecimal currencyRate= BigDecimal.valueOf(quotes.get(expectedCurrency)); // converting to big decimal
+        return currencyRate;
+        }
 
     // my private method (not for business logic of orderService)to validate existing fields on my orderDTO
     private void validateRelatedFieldsAreExist(OrderDTO orderDTO) {
