@@ -12,7 +12,7 @@ public class SalaryApp {
        SalaryService salaryService = container.getBean(SalaryService.class);
 
        salaryService.calculateRegularSalary();
-       //salaryService.calculateRegularSalary();
+
 
     }
 }
