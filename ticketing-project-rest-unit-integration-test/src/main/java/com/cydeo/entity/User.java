@@ -24,6 +24,9 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String passWord;
 
+    @Column(nullable = false)
+    private String confirmPassWord;
+
     private boolean enabled;
     private String phone;
 
