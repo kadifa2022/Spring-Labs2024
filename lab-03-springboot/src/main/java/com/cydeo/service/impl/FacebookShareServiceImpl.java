@@ -16,10 +16,10 @@ public class FacebookShareServiceImpl implements ShareService {
         System.out.println("Recipe Name " + recipe.getName());
         System.out.println("Ingredient List ");
         recipe.getIngredients().forEach(ingredient -> {
-            System.out.println(" Ingredient Name " + ingredient.getName() + "Quantity : " +
+            System.out.println("Ingredient Name " + ingredient.getName() + "Quantity : " +
                     ingredient.getQuantity() + " " + ingredient.getQuantityType());
         });
-        System.out.println("Preparation:  \n" + "\t" + recipe.getPreparation());
+        System.out.println("Preparation: \n" + "\t " + recipe.getPreparation());
         return true;
     }
 }
