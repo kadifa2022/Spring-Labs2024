@@ -1,4 +1,6 @@
-package com.cydeo.service.impl;
+package com.cydeo.lab04springmvc.service.impl;
+
+
 
 import com.cydeo.lab04springmvc.model.Product;
 import com.cydeo.lab04springmvc.service.ProductService;
@@ -20,11 +22,11 @@ public class ProductServiceImpl implements ProductService {
                 .filter(product -> product.getName().startsWith(name))
                 .collect(Collectors.toList());
 
-
-
     }
 
-    @Override
+
+
+      @Override
     public void initialiseProductList(){
         Product product1 = new Product();
         product1.setId(UUID.randomUUID());

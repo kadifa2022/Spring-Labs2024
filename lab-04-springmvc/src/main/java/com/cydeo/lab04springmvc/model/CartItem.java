@@ -1,4 +1,4 @@
-package com.cydeo.model;
+package com.cydeo.lab04springmvc.model;
 
 import lombok.Getter;
 import lombok.Setter;

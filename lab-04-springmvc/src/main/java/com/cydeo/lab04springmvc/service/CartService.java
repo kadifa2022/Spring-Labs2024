@@ -1,5 +1,5 @@
 
-package com.cydeo.service;
+package com.cydeo.lab04springmvc.service;
 
 import com.cydeo.lab04springmvc.model.Cart;
 import com.cydeo.lab04springmvc.model.CartItem;
