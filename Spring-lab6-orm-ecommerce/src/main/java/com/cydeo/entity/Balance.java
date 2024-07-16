@@ -17,8 +17,8 @@ public class Balance extends BaseEntity {
 
 
     private BigDecimal amount;
-
-    @OneToOne
+   //we are creating connections in balance table because we don't want to bring balance when we call customer in customer table
+    @OneToOne // holding foreign key as costumer_id
     private Customer customer;
 
 }
