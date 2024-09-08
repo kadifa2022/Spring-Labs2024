@@ -5,7 +5,8 @@ import com.cydeo.lab08rest.service.CartService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CartServiceImp  implements CartService {
+public class
+CartServiceImp  implements CartService {
 
     private final CartRepository cartRepository;
 

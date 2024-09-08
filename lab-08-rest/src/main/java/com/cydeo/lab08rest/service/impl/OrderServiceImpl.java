@@ -61,7 +61,7 @@ public class OrderServiceImpl implements OrderService {
         //1st step look for the orderId inside the DB and throw exception
         Order order = orderRepository.findById(orderDTO.getId())
                 .orElseThrow(()->new NotFoundException("Order could not be found"));
-        //we have to check of the Order fields exists or not (creating private method if something exists in dB)
+        //we have to check of the Order fields (if they have another dependencies in the order like customer, cart) exists or not (creating private method if something exists in dB)
         validateRelatedFieldsAreExist(orderDTO);
         // if fields exists, then convert orderDTO to order and save it
         Order willBeUpdatedOrder = mapperUtil.convert(orderDTO, new Order());
@@ -146,7 +146,7 @@ public class OrderServiceImpl implements OrderService {
 
 
 
-    // my private method (not for business logic of orderService)to validate existing fields on my orderDTO
+    // my private method (not for business logic of orderService)to validate existing fields dependencies from my orderDTO
     private void validateRelatedFieldsAreExist(OrderDTO orderDTO) {
         //in this method we have 3 different service and make sure that they have fields
         //we will create service and existById method and verify

@@ -66,7 +66,8 @@ public class ProductController {
     }
 
     @GetMapping("/price/{price}/quantity/{quantity}")
-    public ResponseEntity<ResponseWrapper> retrieveProductsByPriceAndQuantity(@PathVariable("price") BigDecimal price, @PathVariable("quantity") Integer quantity) {
+    public ResponseEntity<ResponseWrapper> retrieveProductsByPriceAndQuantity(@PathVariable("price") BigDecimal price,
+                                                      @PathVariable("quantity") Integer quantity) {
         return ResponseEntity.ok(new ResponseWrapper("Products are successfully retrieved.",
                 productService.retrieveProductByPriceAndQuantity(price, quantity), HttpStatus.OK));
     }

@@ -21,6 +21,8 @@ public class OrderController {
         this.orderService = orderService;
     }
 
+    // ResponseWrapper for customizing body(for customizing dto, want to pass status code inside JSON, message
+    // ResponseEntity for custom Header and  custom status code
 
     @GetMapping
     public ResponseEntity<ResponseWrapper> getOrderList(){
