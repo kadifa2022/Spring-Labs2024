@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="spring-18-REST-SchoolLab" />
+        <module name="spring-12-Data-Relationship" />
         <module name="spring-review-IoC" />
         <module name="Spring-lab6-orm-ecommerce" />
         <module name="lab-08-rest" />
@@ -26,6 +27,7 @@
       <module name="lab-03-springboot" options="-parameters" />
       <module name="lab-04-springmvc" options="-parameters" />
       <module name="lab-08-rest" options="-parameters" />
+      <module name="spring-12-Data-Relationship" options="-parameters" />
       <module name="spring-18-REST-SchoolLab" options="-parameters" />
       <module name="spring-lab6-orm-ecomerce" options="-parameters" />
       <module name="ticketing-project-rest-unit-integration-test" options="-parameters" />
