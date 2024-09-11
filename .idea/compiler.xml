@@ -8,6 +8,7 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="spring-18-REST-SchoolLab" />
+        <module name="Library-Managment-System" />
         <module name="spring-12-Data-Relationship" />
         <module name="spring-13-Data-Queries" />
         <module name="spring-review-IoC" />
@@ -24,6 +25,7 @@
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="Library-Managment-System" options="-parameters" />
       <module name="Spring-lab6-orm-ecommerce" options="-parameters" />
       <module name="lab-03-springboot" options="-parameters" />
       <module name="lab-04-springmvc" options="-parameters" />
