@@ -29,6 +29,8 @@ public class PaymentDetail {
 
     @Column(columnDefinition = "DATE")
     private LocalDate payoutAmount;
+    @OneToOne(mappedBy = "paymentDetail")
+    private Payment payment;
 
 
 }

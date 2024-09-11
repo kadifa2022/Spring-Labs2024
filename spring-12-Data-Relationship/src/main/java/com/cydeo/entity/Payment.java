@@ -27,11 +27,18 @@ public class Payment {
     private Long id;
     @Column(columnDefinition = "DATE")
     private LocalDate createdDate;
-
     private BigDecimal amount;
-
     @Enumerated(EnumType.STRING)
     private PaymentStatus paymentStatus;
+
+    @ManyToOne
+    private Merchant merchant;
+
+    @OneToOne(cascade = CascadeType.ALL)// What ever action we are using for payment table  we are using
+    // for payment_details table  also without payment details repository
+   //  @JoinColumn(name = "myForeignKey") if we need to re-name Foreign key column
+//    @OneToOne(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    private PaymentDetail paymentDetail;
 
 
 
