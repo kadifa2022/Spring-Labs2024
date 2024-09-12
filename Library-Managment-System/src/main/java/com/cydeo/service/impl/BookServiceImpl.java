@@ -40,7 +40,7 @@ public class BookServiceImpl implements BookService {
         Book bookFound = bookRepository.findById(id).get();
         bookFound.setAuthor(bookDto.getAuthor());
         bookFound.setTitle(bookDto.getTitle());
-        bookFound.setISBN(bookDto.getISBN());
+        bookFound.setIsbn(bookDto.getIsbn());
         bookFound.setAvailable(true);
         bookRepository.save(bookFound);
 
@@ -51,4 +51,12 @@ public class BookServiceImpl implements BookService {
     public void deleteBook(Long id) {
       bookRepository.deleteById(id);
     }
+
+    @Override
+    public BookDto findByTitle(String title) {
+        Book book = bookRepository.findByTitle(title);
+        return mapperUtil.convert(book, new BookDto());
+    }
+
+
 }
