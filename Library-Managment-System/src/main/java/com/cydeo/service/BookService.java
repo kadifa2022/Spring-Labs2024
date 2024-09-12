@@ -1,7 +1,7 @@
 package com.cydeo.service;
 
 import com.cydeo.dto.BookDto;
-import com.cydeo.entity.Book;
+
 
 import java.util.List;
 
@@ -12,4 +12,5 @@ public interface BookService {
    BookDto updateBook(BookDto bookDto,Long id);
    void deleteBook(Long id);
 
+    BookDto findByTitle(String title);
 }
