@@ -17,6 +17,6 @@ public class Book extends BaseEntity {
     private String title;
     private String author;
 
-    private String ISBN;
-    private boolean isAvailable;
+    private String isbn;
+    private boolean available;
 }

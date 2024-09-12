@@ -1,5 +1,6 @@
 package com.cydeo.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,12 +12,12 @@ import lombok.Setter;
 @AllArgsConstructor
 public class BookDto {
 
-
+    @JsonIgnore
     private String id;
 
     private String title;
     private String author;
 
-    private String ISBN;
-    private boolean isAvailable;
+    private String isbn;
+    private boolean available;
 }
